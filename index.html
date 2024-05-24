@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        input[type="number"] {
+            width: 50px;
+            padding: 5px;
+            margin: 10px 0;
+        }
+        .password {
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            width: 100%;
+            box-sizing: border-box;
+            word-break: break-all;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button.copy {
+            background-color: #008CBA;
+        }
+        button.copy:hover {
+            background-color: #007BB5;
+        }
+        button.reset {
+            background-color: #f44336;
+        }
+        button.reset:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Password Generator</h1>
+        <label for="length">Password Length:</label>
+        <input type="number" id="length" name="length" min="1" max="128" value="12">
+        <div class="password" id="password">Your Generated Password</div>
+        <div class="buttons">
+            <button onclick="generatePassword()">Generate</button>
+            <button class="copy" onclick="copyPassword()">Copy</button>
+            <button class="reset" onclick="resetPassword()">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        function generatePassword() {
+            const length = document.getElementById('length').value;
+            const charset = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
+            let password = "";
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * charset.length);
+                password += charset[randomIndex];
+            }
+            document.getElementById('password').textContent = password;
+        }
+
+        function copyPassword() {
+            const passwordText = document.getElementById('password').textContent;
+            navigator.clipboard.writeText(passwordText).then(() => {
+                alert("Password copied to clipboard!");
+            }, () => {
+                alert("Failed to copy password.");
+            });
+        }
+
+        function resetPassword() {
+            document.getElementById('length').value = 12;
+            document.getElementById('password').textContent = "Your Generated Password";
+        }
+    </script>
+</body>
+</html>
